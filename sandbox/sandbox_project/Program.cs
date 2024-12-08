@@ -4,6 +4,19 @@ public class Program
 {
     static void Main(string[] args)
     {
+
+        /*
+        var thisString = "Hello";
+
+        var thisArray = thisString.ToCharArray();
+
+        Array.Reverse(thisArray);
+
+        var revArrToString = new string(thisArray);
+
+        Console.WriteLine();*/
+
+        /*
         List<int> newList = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         Console.WriteLine($"{newList.Count}\n");
         
@@ -11,6 +24,6 @@ public class Program
 
         foreach (int num in thisList) {
             Console.Write(num);
-        }
+        }*/
     }
 }

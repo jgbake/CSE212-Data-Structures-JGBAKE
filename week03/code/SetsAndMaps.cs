@@ -21,8 +21,23 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        List<string> toReturn = new List<string>();
+        HashSet<int> listCheck = new HashSet<int>();
+        foreach (string word in words) {
+            var wordHash = word.GetHashCode();
+            var wordArray = word.ToCharArray();
+            Array.Reverse(wordArray);
+            var wordReverse = new string(wordArray);
+            var reverseHash = wordReverse.GetHashCode();
+
+            if (!listCheck.Contains(wordHash) && !listCheck.Contains(reverseHash)) {
+                listCheck.Add(wordHash);
+            }
+            else if (listCheck.Contains(reverseHash)) {
+                toReturn.Add($"{word} & {wordReverse}");
+            }
+        }
+        return toReturn.ToArray();
     }
 
     /// <summary>
@@ -42,7 +57,12 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+            if (!degrees.ContainsKey(fields[3])) {
+                degrees.Add(fields[3], 1);
+            }
+            else {
+                degrees[fields[3]]++;
+            }
         }
 
         return degrees;
@@ -66,8 +86,49 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var word1lower = word1.ToLower();
+        var word2lower = word2.ToLower();
+
+        var word1CharDict = new Dictionary<char, int>();
+        foreach (char letter in word1lower) {
+            if (letter == ' ') {}
+            else if (!word1CharDict.ContainsKey(letter)) {
+                word1CharDict.Add(letter, 1);
+            }
+            else {
+                word1CharDict[letter]++;
+            }
+        }
+
+        var word2CharDict = new Dictionary<char, int>();
+        foreach (char letter in word2lower) {
+            if (letter == ' ') {}
+            else if (!word2CharDict.ContainsKey(letter)) {
+                word2CharDict.Add(letter, 1);
+            }
+            else {
+                word2CharDict[letter]++;
+            }
+        }
+
+        if (word2CharDict.Count != word1CharDict.Count) {
+            return false;
+        }
+
+        bool isAnagram = false;
+        foreach (KeyValuePair<char, int> letter in word1CharDict) {
+            if (!word2CharDict.ContainsKey(letter.Key)) {
+                return false;
+            }
+            else if (word2CharDict[letter.Key] != letter.Value) {
+                return false;
+            }
+            else {
+                isAnagram = true;
+            }
+        }
+
+        return isAnagram;
     }
 
     /// <summary>
